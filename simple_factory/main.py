@@ -12,8 +12,13 @@ def demonstrarPaganentos():
     pagamento_boleto = PagamentoFactory.criarPagamentoOffline("boleto")
     print(pagamento_boleto.pagar())
    
+def demonstrarNotificacoes():
+    notificacao_email = NotificacaoFactory.criarNotificacao("email")
+    print(notificacao_email.enviar())
+
 if __name__ == "__main__":
     demonstrarPaganentos()
+    demonstrarNotificacoes()
 
 
    
