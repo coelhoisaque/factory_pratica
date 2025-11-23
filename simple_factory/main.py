@@ -16,6 +16,12 @@ def demonstrarNotificacoes():
     notificacao_email = NotificacaoFactory.criarNotificacao("email")
     print(notificacao_email.enviar())
 
+    notificacao_sms = NotificacaoFactory.criarNotificacao("sms")
+    print(notificacao_sms.enviar())
+
+    notificacao_whatsapp = NotificacaoFactory.criarNotificacao("whatsapp")
+    print(notificacao_whatsapp.enviar())
+
 if __name__ == "__main__":
     demonstrarPaganentos()
     demonstrarNotificacoes()
