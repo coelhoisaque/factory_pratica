@@ -18,7 +18,7 @@ class PagamentoFactory:
             raise ValueError(f"Tipo de pagamento não conhecido: {pagamentoType}")
         
     @staticmethod
-    def criarPagamento(pagamentoType: str) -> Pagamento:
+    def criarPagamentoOffline(pagamentoType: str) -> Pagamento:
         """Cria  pagamentos offline."""
         if pagamentoType == "boleto":
             return Boleto()
