@@ -5,13 +5,22 @@ from boleto import Boleto
 
 # Factory Method: classe responsável por criar pagamentos
 class PagamentoFactory:
+    """Simple Factory para criar objetos de pagamento."""
+    
     @staticmethod
-    def criarPagamento(pagamentoType: str) -> Pagamento:
+    def criarPagamentoOnline(pagamentoType: str) -> Pagamento:
+        """Cria pagamentos online (cartão ou PIX)."""
         if pagamentoType == "cartão":
             return Cartao()
         elif pagamentoType == "pix":
             return Pix()
-        elif pagamentoType == "boleto":
+        else:
+            raise ValueError(f"Tipo de pagamento não conhecido: {pagamentoType}")
+        
+    @staticmethod
+    def criarPagamento(pagamentoType: str) -> Pagamento:
+        """Cria  pagamentos offline."""
+        if pagamentoType == "boleto":
             return Boleto()
         else:
             raise ValueError(f"Tipo de pagamento não conhecido: {pagamentoType}")
