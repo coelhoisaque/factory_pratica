@@ -2,6 +2,11 @@ from pagamento_factory import CartaoFactory
 from pagamento_factory import PixFactory
 from pagamento_factory import BoletoFactory
 
+from notificacao_factory import EmailFactory
+from notificacao_factory import SMSFactory
+from notificacao_factory import WhatsappFactory     
+
+
 # Uso do Factory Method pattern 
 if __name__ == "__main__":
     
@@ -24,3 +29,18 @@ if __name__ == "__main__":
     boleto_factory = BoletoFactory()
     pagamento_boleto = boleto_factory.criarPagamento()
     print(pagamento_boleto.pagar())  # saída: Pagamento realizado via Boleto!
+
+    print("\n=== SISTEMA DE NOTIFICAÇÕES (Factory Method) ===\n")
+    # Cada factory concreta cria seu próprio tipo de notificação
+
+    email_factory = EmailFactory()
+    notificacao_email = email_factory.criarNotificacao()
+    print(notificacao_email.enviar())  # saída: Notificação enviada por Email!
+
+    sms_factory = SMSFactory()
+    notificacao_sms = sms_factory.criarNotificacao()
+    print(notificacao_sms.enviar())  # saída: Notificação enviada por SMS!      
+
+    whatsapp_factory = WhatsappFactory()
+    notificacao_whatsapp = whatsapp_factory.criarNotificacao()
+    print(notificacao_whatsapp.enviar())  # saída: Notificação enviada por WhatsApp
