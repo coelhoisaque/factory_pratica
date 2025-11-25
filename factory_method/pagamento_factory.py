@@ -19,3 +19,19 @@ class CartaoFactory(PagamentoFactory):
     def criarPagamento(self) -> Pagamento:
         """Factory Method: cria uma instância de Cartão"""
         return Cartao()
+
+class PixFactory(PagamentoFactory):
+    """Factory concreta para criar pagamentos por PIX."""
+    
+    def criarPagamento(self) -> Pagamento:
+        """Factory Method: cria uma instância de Pix"""
+        from pix import Pix
+        return Pix()
+    
+class BoletoFactory(PagamentoFactory):
+    """Factory concreta para criar pagamentos por boleto."""
+    
+    def criarPagamento(self) -> Pagamento:
+        """Factory Method: cria uma instância de Boleto"""
+        from boleto import Boleto
+        return Boleto()
