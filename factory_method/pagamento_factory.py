@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from pagamento import Pagamento
+from cartao import Cartao
 
 
 
