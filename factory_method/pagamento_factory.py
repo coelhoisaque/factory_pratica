@@ -1,0 +1,13 @@
+from abc import ABC, abstractmethod
+from pagamento import Pagamento
+
+
+
+class PagamentoFactory(ABC):
+    """Factory Method abstrato para criar objetos de pagamento."""
+    
+    @abstractmethod
+    def criarPagamento(self) -> Pagamento:
+        """Factory Method: cada subclasse implementa sua própria lógica de criação"""
+        pass
+   
