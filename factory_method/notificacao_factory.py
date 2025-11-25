@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from notificacao import Notificacao
-
+from email import Email
 
 
 class NotificacaoFactory(ABC):
