@@ -1,36 +1,31 @@
 from abc import ABC, abstractmethod
 from notificacao import Notificacao
-from email import Email
+from note_email import Email
+from sms import SMS
+from whatsapp import Whatsapp
 
 
 class NotificacaoFactory(ABC):
     """Factory Method abstrato para criar objetos de pagamento."""
     @abstractmethod
-    def criarNotificacao(self) -> Notificacao:
+    def criarNotificacao(self, canal: str) -> Notificacao:
         """Factory Method: cada subclasse implementa sua própria lógica de criação"""
         pass
    
-# Concrete Creator - Factory Method Pattern
-class EmailFactory(NotificacaoFactory):
-    """Factory concreta para criar notificações por email."""
-    
-    def criarNotificacao(self) -> Notificacao:
-        """Factory Method: cria uma instância de Email"""
-        
-        return Email()  
-    
-class SMSFactory(NotificacaoFactory):
-    """Factory concreta para criar notificações por SMS."""
-    
-    def criarNotificacao(self) -> Notificacao:
-        """Factory Method: cria uma instância de SMS"""
-        from sms import SMS
-        return SMS()
+class notificacaoUrgente(NotificacaoFactory):
+    def criarNotificacao(self, canal: str) -> Notificacao:
+        """Cria notificações urgentes (SMS ou WhatsApp)."""
+        if canal == "sms":
+            return SMS()
+        elif canal == "whatsapp":
+            return Whatsapp()
+        else:
+            raise ValueError(f"Canal de notificação não conhecido para urgente: {canal}")
 
-class WhatsappFactory(NotificacaoFactory):
-    """Factory concreta para criar notificações por WhatsApp."""
-    
-    def criarNotificacao(self) -> Notificacao:
-        """Factory Method: cria uma instância de WhatsApp"""
-        from whatsapp import Whatsapp
-        return Whatsapp()
+class notificacaoNormal(NotificacaoFactory):
+    def criarNotificacao(self, canal: str) -> Notificacao:
+        """Cria notificações normais (email)."""
+        if canal == "email":
+            return Email()
+        else:
+            raise ValueError(f"Canal de notificação não conhecido para normal: {canal}")
