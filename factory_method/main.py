@@ -1,46 +1,70 @@
-from pagamento_factory import CartaoFactory
-from pagamento_factory import PixFactory
-from pagamento_factory import BoletoFactory
+from pagamento_factory import pagamentoOnline, pagamentoOffline
+from notificacao_factory import notificacaoUrgente, notificacaoNormal
 
-from notificacao_factory import EmailFactory
-from notificacao_factory import SMSFactory
-from notificacao_factory import WhatsappFactory     
+def demonstrarPagamentos():
+    print("=== SISTEMA DE PAGAMENTO (Factory Method Corrigido) ===\n")
 
+    # Factory para pagamentos online
+    factory_online = pagamentoOnline()
+    
+    # Criar pagamento por cartão usando a factory online
+    pagamento_cartao = factory_online.criarPagamento("cartão")
+    print(f"Cartão: {pagamento_cartao.pagar()}")
 
-# Uso do Factory Method pattern 
+    # Criar pagamento por PIX usando a factory online
+    pagamento_pix = factory_online.criarPagamento("pix")
+    print(f"PIX: {pagamento_pix.pagar()}")
+
+    # Factory para pagamentos offline
+    factory_offline = pagamentoOffline()
+    
+    # Criar pagamento por boleto usando a factory offline
+    pagamento_boleto = factory_offline.criarPagamento("boleto")
+    print(f"Boleto: {pagamento_boleto.pagar()}")
+
+    print("\n" + "="*50)
+
+def demonstrarNotificacoes():
+    print("\n=== SISTEMA DE NOTIFICAÇÕES (Factory Method Corrigido) ===\n")
+
+    # Factory para notificações urgentes
+    factory_urgente = notificacaoUrgente()
+    
+    # Criar notificações urgentes
+    notificacao_sms_urgente = factory_urgente.criarNotificacao("sms")
+    print(f"SMS Urgente: {notificacao_sms_urgente.enviar()}")
+
+    notificacao_whatsapp_urgente = factory_urgente.criarNotificacao("whatsapp")
+    print(f"WhatsApp Urgente: {notificacao_whatsapp_urgente.enviar()}")
+
+    # Factory para notificações normais
+    factory_normal = notificacaoNormal()
+    
+    # Criar notificações normais
+    notificacao_email_normal = factory_normal.criarNotificacao("email")
+    print(f"Email Normal: {notificacao_email_normal.enviar()}")
+
+    print("\n" + "="*50)
+
+def demonstrarTratamentoErros():
+    print("\n=== DEMONSTRAÇÃO DE TRATAMENTO DE ERROS ===\n")
+    
+    factory_online = pagamentoOnline()
+    factory_urgente = notificacaoUrgente()
+    
+    try:
+        # Tentativa de criar tipo de pagamento não suportado
+        factory_online.criarPagamento("paypal")
+    except ValueError as e:
+        print(f"Erro esperado no pagamento: {e}")
+    
+    try:
+        # Tentativa de criar canal não suportado para notificação urgente
+        factory_urgente.criarNotificacao("email")
+    except ValueError as e:
+        print(f"Erro esperado na notificação: {e}")
+
 if __name__ == "__main__":
-    
-
-    print("=== SISTEMA DE PAGAMENTO (Factory Method) ===\n")
-
-    # Cada factory concreta cria seu próprio tipo de pagamento
-    cartao_factory = CartaoFactory()
-    
-    # Usar a fábrica para criar um pagamento por cartão
-    pagamento_cartao = cartao_factory.criarPagamento()
-    print(pagamento_cartao.pagar()) # saída: Pagamento realizado com cartão de crédito/débito!
-
-    # Exemplo adicional: criar pagamento por PIX
-    pix_factory = PixFactory()
-    pagamento_pix = pix_factory.criarPagamento()
-    print(pagamento_pix.pagar())  # saída: Pagamento realizado via PIX!
-
-    # Exemplo adicional: criar pagamento por Boleto
-    boleto_factory = BoletoFactory()
-    pagamento_boleto = boleto_factory.criarPagamento()
-    print(pagamento_boleto.pagar())  # saída: Pagamento realizado via Boleto!
-
-    print("\n=== SISTEMA DE NOTIFICAÇÕES (Factory Method) ===\n")
-    # Cada factory concreta cria seu próprio tipo de notificação
-
-    email_factory = EmailFactory()
-    notificacao_email = email_factory.criarNotificacao()
-    print(notificacao_email.enviar())  # saída: Notificação enviada por Email!
-
-    sms_factory = SMSFactory()
-    notificacao_sms = sms_factory.criarNotificacao()
-    print(notificacao_sms.enviar())  # saída: Notificação enviada por SMS!      
-
-    whatsapp_factory = WhatsappFactory()
-    notificacao_whatsapp = whatsapp_factory.criarNotificacao()
-    print(notificacao_whatsapp.enviar())  # saída: Notificação enviada por WhatsApp
+    demonstrarPagamentos()
+    demonstrarNotificacoes()
+    demonstrarTratamentoErros()
