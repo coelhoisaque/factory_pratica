@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from pagamento import Pagamento
 from cartao import Cartao
+from pix import Pix
+from boleto import Boleto
 
 
 
@@ -11,27 +13,24 @@ class PagamentoFactory(ABC):
     def criarPagamento(self) -> Pagamento:
         """Factory Method: cada subclasse implementa sua própria lógica de criação"""
         pass
-   
-# Concrete Creator - Factory Method Pattern
-class CartaoFactory(PagamentoFactory):
-    """Factory concreta para criar pagamentos por cartão."""
-    
-    def criarPagamento(self) -> Pagamento:
-        """Factory Method: cria uma instância de Cartão"""
-        return Cartao()
 
-class PixFactory(PagamentoFactory):
-    """Factory concreta para criar pagamentos por PIX."""
+
+class pagamentoOnline(PagamentoFactory):
     
-    def criarPagamento(self) -> Pagamento:
-        """Factory Method: cria uma instância de Pix"""
-        from pix import Pix
-        return Pix()
+    def criarPagamento(self, pagamentoType: str) -> Pagamento:
+        """Cria pagamentos online (cartão ou PIX)."""
+        if pagamentoType == "cartão":
+            return Cartao()
+        elif pagamentoType == "pix":
+            return Pix()
+        else:
+            raise ValueError(f"Tipo de pagamento não conhecido: {pagamentoType}")
+
+class pagamentoOffline(PagamentoFactory):   
     
-class BoletoFactory(PagamentoFactory):
-    """Factory concreta para criar pagamentos por boleto."""
-    
-    def criarPagamento(self) -> Pagamento:
-        """Factory Method: cria uma instância de Boleto"""
-        from boleto import Boleto
-        return Boleto()
+    def criarPagamento(self, pagamentoType: str) -> Pagamento:
+        """Cria  pagamentos offline."""
+        if pagamentoType == "boleto":
+            return Boleto()
+        else:
+            raise ValueError(f"Tipo de pagamento não conhecido: {pagamentoType}")
